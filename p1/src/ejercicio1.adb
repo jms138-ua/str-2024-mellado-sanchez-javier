@@ -13,9 +13,10 @@ begin
 
    pkg_ejercicio2.otroMensaje;
 
-   Put("Introduce el numero del mes (1-12): ");
-   Ada.Integer_Text_IO.Get(mes);
-   case mes is
+   begin
+      Put("Introduce el numero del mes (1-12): ");
+      Ada.Integer_Text_IO.Get(mes);
+      case mes is
       when 1 | 2 | 12 =>
          Put_Line("La estación correspondiente es Invierno");
       when 3 | 4 | 5 =>
@@ -27,9 +28,15 @@ begin
       when others =>
          Put_Line("Mes incorrecto");
          return;
-   end case;
+      end case;
+   exception
+      when event: others => Put_Line("El número de mes debe ser > 0");
+   end;
+   put_line("FIN DEL PROGRAMA");
 end ejercicio1;
 
 -- Clausula use -> ventaja: simplicidad, inconveniente: ambiguedad
 
 -- No pueden haber dos procedimientos porque solo se acepta una unidad de compilacion en un fichero
+
+-- Si se introduce un mes negativo, al ser tipo natural, saltara la excepcion 'CONSTRAINT_ERROR'

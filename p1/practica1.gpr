@@ -2,6 +2,6 @@ project Practica1 is
 
    for Source_Dirs use ("src");
    for Object_Dir use "obj";
-   for Main use ("ejercicio1.adb", "ejercicio3.adb");
+   for Main use ("ejercicio1.adb", "ejercicio3.adb", "ejercicio6.adb", "numerosaleatorios.adb", "main_tareas_estaticas", "main_tareas_dinamicas");
 
 end Practica1;
