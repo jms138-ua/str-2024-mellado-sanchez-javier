@@ -1,0 +1,30 @@
+ 
+**************************************************************************
+**************************************************************************
+          PRACTICA STR: CONTROL DE TRAFICO AEREO
+**************************************************************************
+**************************************************************************
+ 
+Inicializando Entorno Gráfico...
+======================INICIO TASK Torre_Control
+Entorno Gráfico Inicializado.
+TASK Avion:  0 - 1
+TASK Avion:  0 - 2
+TASK Avion:  0 - 3
+TASK Avion:  0 - 4
+TASK Avion:  1 - 1
+colision entre:  1- 1   0- 1   distancia: 41
+Avion 1 desaparece de la aerovía 1 por colision
+TASK Avion:  1 - 2
+TASK Avion:  1 - 3
+TASK Avion:  1 - 4
+colision entre:  0- 4   1- 4   distancia: 5
+Avion 0 desaparece de la aerovía 4 por colision
+TASK Avion:  2 - 1
+colision entre:  2- 1   0- 1   distancia: 36
+Avion 2 desaparece de la aerovía 1 por colision
+TASK Avion:  2 - 2
+colision entre:  1- 2   2- 2   distancia: 5
+Avion 1 desaparece de la aerovía 2 por colision
+TASK Avion:  2 - 3
+TASK Avion:  2 - 4
