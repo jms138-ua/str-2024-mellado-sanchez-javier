@@ -1,0 +1,22 @@
+ 
+**************************************************************************
+**************************************************************************
+          PRACTICA STR: CONTROL DE TRAFICO AEREO
+**************************************************************************
+**************************************************************************
+ 
+Inicializando Entorno Gráfico...
+======================INICIO TASK Torre_Control
+Entorno Gráfico Inicializado.
+TASK Avion:  0 - 1
+TASK Avion:  0 - 2
+TASK Avion:  0 - 3
+TASK Avion:  0 - 4
+TASK Avion:  1 - 1
+TASK Avion:  1 - 2
+TASK Avion:  1 - 3
+TASK Avion:  1 - 4
+TASK Avion:  2 - 1
+TASK Avion:  2 - 2
+TASK Avion:  2 - 3
+TASK Avion:  2 - 4
