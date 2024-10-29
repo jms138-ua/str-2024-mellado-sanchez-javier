@@ -41,7 +41,7 @@ package body pkg_aviones is
       --t_acceso:Time;
       posicion_nueva:T_Rango_Rejilla_X;
       posicion_actual:T_Rango_Rejilla_X;
-      descenso_concedido:Boolean;
+      descenso_concedido:Boolean := False;
 
       procedure desaparece is
       begin
@@ -91,39 +91,44 @@ package body pkg_aviones is
 
       pkg_graficos.Aparece(ptr_avion.all);
 
-      loop
-         posicion_actual := pkg_graficos.Posicion_ZonaEspacioAereo(ptr_avion.pos.X);
+      begin
+         loop
+            posicion_actual := pkg_graficos.Posicion_ZonaEspacioAereo(ptr_avion.pos.X);
 
-         select
-            Tarea_Torre_Control.Solicitar_Descenso(ptr_avion.aerovia, descenso_concedido);
-            ptr_avion.color := Yellow;
+            if not descenso_concedido then
+               select
+                  Tarea_Torre_Control.Solicitar_Descenso(ptr_avion.aerovia, descenso_concedido);
 
-            -- Desciende si existe hueco en la siguiente aerovia
-            if descenso_concedido
-              and arr_aerovias(ptr_avion.aerovia+1).esPosicionLibre(posicion_actual-1)
-              and arr_aerovias(ptr_avion.aerovia+1).esPosicionLibre(posicion_actual)
-              and arr_aerovias(ptr_avion.aerovia+1).esPosicionLibre(posicion_actual+1)
-            then
-               -- Desaparece si es la ultima aerolinea
-               if ptr_avion.aerovia+1 = T_Rango_AeroVia'Last then
-                  desaparece;
-                  exit;
+                  if descenso_concedido then
+                     ptr_avion.color := Yellow;
+                  end if;
+               then abort
+                  avanza;
+               end select;
+            else
+               -- Desciende si existe hueco en la siguiente aerovia
+               if arr_aerovias(ptr_avion.aerovia+1).esPosicionLibre(posicion_actual)
+                 and arr_aerovias(ptr_avion.aerovia+1).esPosicionLibre(posicion_actual-1)
+                 and arr_aerovias(ptr_avion.aerovia+1).esPosicionLibre(posicion_actual+1)
+               then
+                  -- Desaparece si es la ultima aerolinea
+                  if ptr_avion.aerovia+1 = T_Rango_AeroVia'Last then
+                     desaparece;
+                     exit;
+                  end if;
+
+                  desciende;
+                  descenso_concedido := False;
+               else
+                  avanza;
                end if;
-
-               desciende;
             end if;
-
-         then abort
-            begin
-               avanza;
-            exception
-               when DETECTADA_POSIBLE_COLISION =>
-                  pkg_debug.Escribir("Avion" & T_IdAvion'Image(ptr_avion.id) & " desaparece de la aerovía" & T_Rango_Aerovia'Image(ptr_avion.aerovia) & " por colision");
-                  pkg_graficos.Desaparece(ptr_avion.all);
-                  exit;
-            end;
-         end select;
-      end loop;
+         end loop;
+      exception
+         when DETECTADA_POSIBLE_COLISION =>
+            pkg_debug.Escribir("Avion" & T_IdAvion'Image(ptr_avion.id) & " desaparece de la aerovía" & T_Rango_Aerovia'Image(ptr_avion.aerovia) & " por colision");
+            pkg_graficos.Desaparece(ptr_avion.all);
+      end;
    end T_TareaAvion;
 
 end pkg_aviones;
