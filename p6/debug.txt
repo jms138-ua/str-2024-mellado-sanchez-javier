@@ -9,7 +9,6 @@ Inicializando Entorno Gráfico...
 ======================INICIO TASK Torre_Control
 Entorno Gráfico Inicializado.
 TASK Avion:  0 - 1
-INICIAR TORRE DE CONTROL
 TASK Avion:  0 - 2
 TASK Avion:  0 - 3
 TASK Avion:  0 - 4
@@ -21,3 +20,4 @@ TASK Avion:  2 - 1
 TASK Avion:  2 - 2
 TASK Avion:  2 - 3
 TASK Avion:  2 - 4
+INICIAR TORRE DE CONTROL

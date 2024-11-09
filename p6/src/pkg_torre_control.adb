@@ -37,7 +37,7 @@ PACKAGE BODY PKG_Torre_Control IS
             end Solicitar_Pista;
          or
             accept Solicitar_Aterrizaje(pista: in T_PistaAterrizaje) do
-               requeue arr_pistas(pista).aterrizar with abort;
+               requeue arr_pistas(pista).aterrizar;
             end Solicitar_Aterrizaje;
          or
             accept Solicitar_Descenso(aerovia: in T_Rango_AeroVia; concedido: out Boolean) do

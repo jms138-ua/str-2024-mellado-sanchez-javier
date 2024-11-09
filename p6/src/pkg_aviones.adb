@@ -161,15 +161,13 @@ package body pkg_aviones is
          end loop;
          continuar := True;
 
-         while continuar loop
-            select
-               Tarea_Torre_Control.Solicitar_Aterrizaje(ptr_avion.pista);
-               continuar := False;
-            then abort
+         select
+            Tarea_Torre_Control.Solicitar_Aterrizaje(ptr_avion.pista);
+         then abort
+            loop
                avanza;
-            end select;
-         end loop;
-         continuar := True;
+            end loop;
+         end select;
 
          ptr_avion.tren_aterrizaje := True;
 
