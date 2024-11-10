@@ -39,7 +39,6 @@ package body pkg_aviones is
    task body T_TareaAvion is
       --t_inicio:Time;
       --t_acceso:Time;
-      continuar:Boolean := True;
       posicion_nueva:T_Rango_Rejilla_X;
       posicion_actual:T_Rango_Rejilla_X;
       descenso_concedido:Boolean := False;
@@ -47,6 +46,7 @@ package body pkg_aviones is
 
       procedure desaparece is
       begin
+         posicion_actual := pkg_graficos.Posicion_ZonaEspacioAereo(ptr_avion.pos.X);
          arr_aerovias(ptr_avion.aerovia).liberar(posicion_actual);
          arr_aerovias(ptr_avion.aerovia).nAvionesDecr;
          pkg_graficos.Desaparece(ptr_avion.all);
@@ -55,6 +55,7 @@ package body pkg_aviones is
       -- Avanza posicion
       procedure avanza is
       begin
+         posicion_actual := pkg_graficos.Posicion_ZonaEspacioAereo(ptr_avion.pos.X);
          posicion_nueva := pkg_graficos.Posicion_ZonaEspacioAereo(pkg_graficos.Nueva_PosicionX(ptr_avion.pos.X, ptr_avion.velocidad.X));
 
          if posicion_actual /= posicion_nueva then
@@ -69,6 +70,7 @@ package body pkg_aviones is
       -- Desciende aerovia
       procedure desciende is
       begin
+         posicion_actual := pkg_graficos.Posicion_ZonaEspacioAereo(ptr_avion.pos.X);
          desaparece;
          arr_aerovias(ptr_avion.aerovia+1).ocupar(posicion_actual);
          arr_aerovias(ptr_avion.aerovia+1).nAvionesIncr;
@@ -127,7 +129,9 @@ package body pkg_aviones is
                      ptr_avion.color := Yellow;
                   end if;
                then abort
-                  avanza;
+                  loop
+                     avanza;
+                  end loop;
                end select;
             else
                -- Desciende si existe hueco en la siguiente aerovia
@@ -151,15 +155,13 @@ package body pkg_aviones is
          ----------------------
          -- ATERRIZAR A PISTA--
 
-         while continuar loop
-            select
-               Tarea_Torre_Control.Solicitar_Pista(ptr_avion.pista, ptr_avion.color);
-               continuar := False;
-            then abort
+         select
+            Tarea_Torre_Control.Solicitar_Pista(ptr_avion.pista, ptr_avion.color);
+         then abort
+            loop
                avanza;
-            end select;
-         end loop;
-         continuar := True;
+            end loop;
+         end select;
 
          select
             Tarea_Torre_Control.Solicitar_Aterrizaje(ptr_avion.pista);
